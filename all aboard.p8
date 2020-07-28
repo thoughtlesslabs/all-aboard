@@ -85,7 +85,7 @@ end
 function train()
 	t={}
 	t.x=30
-	t.y=60
+	t.y=65
 	t.oy=60
 	t.dx=0
 	t.dy=0
@@ -120,19 +120,22 @@ function movetrain()
 	t.m=false
 	if t.m==false then
 		t.dx=t.dx/1.2
+		t.dy=t.dy/1.2
 	end
+	if t.y<t.oy then
+		t.dy-=2
+	else
 	t.y+=t.dy
+	end
 	t.x+=t.dx
 	t.x=mid(5,t.x,115)
 	smoke(t.x,t.y,t.d)
 end
 
 function jump()
-	t.dy=-2
-	if t.y > t.oy then
-		t.dy+=2
+	for i=0,10 do
+			t.dy=-2
 	end
-	
 end
 -->8
 -- freshly squeezed
