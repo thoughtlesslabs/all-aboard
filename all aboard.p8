@@ -67,10 +67,9 @@ end
 
 -- main game draw
 function drawgame()
-	print("game")
+	print("game",0,0,10)
 	drawpart()
 	drawtrain()
-	
 end
 
 -- draw gameover screen
@@ -87,6 +86,7 @@ function train()
 	t={}
 	t.x=30
 	t.y=60
+	t.oy=60
 	t.dx=0
 	t.dy=0
 	t.m=false
@@ -114,13 +114,25 @@ function movetrain()
 		t.d=8
 		t.m=true
 	end
+	if btnp(2) then
+		jump()
+	end
 	t.m=false
 	if t.m==false then
-		t.dx=t.dx/1.3
+		t.dx=t.dx/1.2
 	end
+	t.y+=t.dy
 	t.x+=t.dx
-	t.x=mid(0,t.x,127)
+	t.x=mid(5,t.x,115)
 	smoke(t.x,t.y,t.d)
+end
+
+function jump()
+	t.dy=-2
+	if t.y > t.oy then
+		t.dy+=2
+	end
+	
 end
 -->8
 -- freshly squeezed
@@ -147,7 +159,12 @@ function smoke(_x,_y,_d)
 		local _ang = rnd()
 		local _dx = sin(_ang)*1.5
 		local _dy = cos(_ang)*1.5
-		particles(_x,_y,_dx,_dy,40+rnd(15),{5,6,7},rnd(2))
+		local _smoke = 20+rnd(15)
+		if t.d<0 then
+			particles(_x,_y,_dx,_dy,_smoke,{5,6,7},rnd(2))
+		else
+			particles(_x+_d,_y,_dx,_dy,_smoke,{5,6,7},rnd(2))		
+		end
 	end
 end
 
@@ -166,10 +183,10 @@ function updatepart()
 	
 	-- gravity
 --	if 
-	_p.dy-=0.05
+	_p.dy-=0.8
 	
 	--	shrink
-	local _ci=1.5-_p.a/_p.maxa
+	local _ci=1-_p.a/_p.maxa
 	_p.s=_ci*_p.os
 	
 	--	friction
