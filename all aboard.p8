@@ -1,11 +1,73 @@
 pico-8 cartridge // http://www.pico-8.com
-version 27
+version 29
 __lua__
 -- all aboard
 -- thoughtless labs
 
-print 'test'
+function _init()
+	cls()
+	mode="start"
+end
 
+function _update60()
+	if mode=="start" then
+		updatestart()
+	elseif mode=="game" then
+		updategame()
+	elseif mode=="gameover" then
+		updategameover()
+	end
+end
+
+function _draw()
+	cls()
+	if mode=="start" then
+		drawstart()
+	elseif mode=="game" then
+		drawgame()
+	elseif mode=="gameover" then
+		drawgameover()
+	end
+end
+-->8
+-- update functions
+
+function updatestart()
+	if btnp(4) then
+		mode="game"
+	end
+end
+
+function updategame()
+	if btnp(4) then
+		mode="gameover"
+	end
+end
+
+function updategameover()
+	if btnp(4) then
+		mode="start"
+	end
+end
+
+-->8
+-- draw functions
+
+function drawstart()
+	print("let's play a game")
+end
+
+function drawgame()
+	print("game")
+end
+
+function drawgameover()
+	print("gameover")
+end
+
+
+-->8
+-- freshly squeezed
 __gfx__
 00000005000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000555500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
