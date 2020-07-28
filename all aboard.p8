@@ -87,8 +87,8 @@ function train()
 	t={}
 	t.x=30
 	t.y=60
-	t.dx=1
-	t.dy=1
+	t.dx=0
+	t.dy=0
 	t.m=false
 	t.f=false
 	t.d=8
@@ -102,22 +102,24 @@ end
 
 -- move train
 function movetrain()
-	if btnp(0) then
+	if btn(0) then
 		t.dx=-2
 		t.f=true
 		t.d=-8
 		t.m=true
 	end
-	if btnp(1) then
+	if btn(1) then
 		t.dx=2
 		t.f=false
 		t.d=8
 		t.m=true
 	end
+	t.m=false
 	if t.m==false then
 		t.dx=t.dx/1.3
 	end
 	t.x+=t.dx
+	t.x=mid(0,t.x,127)
 	smoke(t.x,t.y,t.d)
 end
 -->8
