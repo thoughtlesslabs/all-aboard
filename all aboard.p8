@@ -114,28 +114,24 @@ function movetrain()
 		t.d=8
 		t.m=true
 	end
-	if btnp(2) then
-		jump()
+	if btn(2) then
+		t.dy=-2
 	end
 	t.m=false
 	if t.m==false then
-		t.dx=t.dx/1.2
-		t.dy=t.dy/1.2
+		t.dx=t.dx/2
+		if t.y<t.oy-20 then
+			t.x+=2*t.dx
+			t.dy=2
+		end
 	end
-	if t.y<t.oy then
-		t.dy-=2
-	else
+	if t.y > t.oy then
+		t.y=t.oy
+	end
 	t.y+=t.dy
-	end
 	t.x+=t.dx
 	t.x=mid(5,t.x,115)
-	smoke(t.x,t.y,t.d)
-end
-
-function jump()
-	for i=0,10 do
-			t.dy=-2
-	end
+	smoke(t.x,t.y,t.f,t.m)
 end
 -->8
 -- freshly squeezed
@@ -157,16 +153,16 @@ function particles(_x,_y,_dx,_dy,_maxa,_col,_s)
 end
 
 -- smoke
-function smoke(_x,_y,_d)
+function smoke(_x,_y,_d,_m)
 	for i=0,5 do
 		local _ang = rnd()
 		local _dx = sin(_ang)*1.5
 		local _dy = cos(_ang)*1.5
-		local _smoke = 20+rnd(15)
-		if t.d<0 then
-			particles(_x,_y,_dx,_dy,_smoke,{5,6,7},rnd(2))
+		local _smoke = 10+rnd(15)
+		if _d then
+			particles(_x,_y,_dx,_dy,_smoke,{5,6,7},rnd(2))		
 		else
-			particles(_x+_d,_y,_dx,_dy,_smoke,{5,6,7},rnd(2))		
+			particles(_x+8,_y,_dx,_dy,_smoke,{5,6,7},rnd(2))		
 		end
 	end
 end
